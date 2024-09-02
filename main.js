@@ -40,31 +40,16 @@ button.addEventListener('click', function (e) {
   if (countryCode) {
     // Display country name and flag
     const country = countryCodes[countryCode];
-    countryInfo.innerHTML = `Country: ${country.name} ${country.flag}`;
+    countryInfo.innerHTML = `This number is from: ${country.name} ${country.flag}`;
 
-    // Use the WhatsApp API to validate if the number exists (pseudo-code)
+    // Create the WhatsApp URL
     const whatsappURL = `https://api.whatsapp.com/send?phone=${formattedPhoneNumber}`;
     
-    fetch(whatsappURL, { method: 'HEAD' })
-      .then(response => {
-        if (response.ok) {
-          validationInfo.innerHTML = 'Number is valid on WhatsApp.';
-          button.value = 'Start a Conversation'; // Change button text to valid
-          button.onclick = () => window.open(whatsappURL, '_blank').focus(); // Open chat on click
-        } else {
-          validationInfo.innerHTML = 'Number is not valid on WhatsApp. Please check the number and try again.';
-          input.style.border = '2px solid #ed5463';
-          button.value = 'Revalidate'; // Change button text to revalidate
-          button.onclick = () => location.reload(); // Reload page to reset state
-        }
-      })
-      .catch(error => {
-        validationInfo.innerHTML = 'Error validating number on WhatsApp.';
-        input.style.border = '2px solid #ed5463';
-        button.value = 'Revalidate'; // Change button text to revalidate
-        button.onclick = () => location.reload(); // Reload page to reset state
-      });
+    // Open WhatsApp chat
+    button.value = 'Start a Conversation'; // Change button text to valid
+    button.onclick = () => window.open(whatsappURL, '_blank').focus(); // Open chat on click
 
+    validationInfo.innerHTML = 'Ready to start a conversation!';
   } else {
     errorText.innerHTML = 'Invalid phone number!';
     input.style.border = '2px solid #ed5463';
